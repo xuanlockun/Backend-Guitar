@@ -1,0 +1,15 @@
+Checklist — đảm bảo mọi thứ hoạt động
+
+Đã cài:
+
+npm install react-hook-form zod @hookform/resolvers
+
+
+authApi.ts phải export login, register, me, logout (mình đã dùng những tên này). Nếu backend trả khác, adjust accordingly.
+
+utils/token.ts phải cung cấp setAccessToken, setRefreshToken, getAccessToken, getRefreshToken, clearTokens.
+
+Đảm bảo AppRoutes.tsx dùng Protected cho routes cần auth, ví dụ:
+
+<Route path="/profile" element={<Protected><Profile /></Protected>} />
+<Route path="/checkout" element={<Protected><Checkout /></Protected>} />
