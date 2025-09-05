@@ -1,4 +1,45 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Category } from './category.entity';
 
 @Injectable()
-export class CategoriesService {}
+export class CategoriesService {
+  constructor(
+    @InjectRepository(Category)
+    private readonly categoryRepository: Repository<Category>,
+  ) {}
+
+  async findAll(): Promise<Category[]> {
+    return this.categoryRepository.find({ relations: ['products'] });
+  }
+
+  async findOne(id: string): Promise<Category> {
+    const category = await this.categoryRepository.findOne({
+      where: { id },
+      relations: ['products'],
+    });
+    if (!category) {
+      throw new NotFoundException(`Category with ID "${id}" not found`);
+    }
+    return category;
+  }
+
+  async create(data: Partial<Category>): Promise<Category> {
+    const category = this.categoryRepository.create(data);
+    return this.categoryRepository.save(category);
+  }
+
+  async update(id: string, data: Partial<Category>): Promise<Category> {
+    const category = await this.findOne(id);
+    Object.assign(category, data);
+    return this.categoryRepository.save(category);
+  }
+
+  async remove(id: string): Promise<void> {
+    const result = await this.categoryRepository.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundException(`Category with ID "${id}" not found`);
+    }
+  }
+}
