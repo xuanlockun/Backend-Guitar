@@ -16,6 +16,6 @@ export class OrderItem {
   @Column('int')
   quantity: number;
 
-  @Column('decimal', { precision: 10, scale: 2 })
+  @Column('decimal', { precision: 15, scale: 0 })
   price: number;
 }

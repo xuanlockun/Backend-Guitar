@@ -17,7 +17,7 @@ export class Order {
   @Column()
   userId: string;
 
-  @Column('decimal', { precision: 10, scale: 2 })
+  @Column('decimal', { precision: 15, scale: 0 })
   totalPrice: number;
 
   @Column({ type: 'enum', enum: ['PENDING', 'PAID', 'SHIPPED', 'DELIVERED', 'CANCELED'], default: 'PENDING' })
@@ -29,5 +29,4 @@ export class Order {
   @CreateDateColumn()
   createdAt: Date;
 
-  // optional: payment relation could be added later
 }

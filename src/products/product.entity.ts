@@ -18,10 +18,10 @@ export class Product {
   @Column('int')
   stock: number;
 
-  @Column()
+  @Column({ nullable: true })
   brand: string;
 
-  @Column('simple-array')
+  @Column('simple-array', { nullable: true })
   images: string[];
 
   @ManyToOne(() => Category, (category) => category.products, { eager: true })
