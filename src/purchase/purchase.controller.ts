@@ -17,33 +17,6 @@ import { PurchaseService } from './purchase.service';
 export class PurchaseController {
   constructor(private readonly purchaseService: PurchaseService) {}
 
-  @Get('cart')
-  async getCart(@Request() req) {
-    return this.purchaseService.getOrCreateCart(req.user.sub);
-  }
-
-  @Post('cart/add')
-  async addToCart(
-    @Request() req,
-    @Body() body: { productId: string; quantity: number },
-  ) {
-    return this.purchaseService.addToCart(req.user.sub, body.productId, body.quantity);
-  }
-
-  @Put('cart/:itemId')
-  async updateCartItem(
-    @Request() req,
-    @Param('itemId') itemId: string,
-    @Body() body: { quantity: number },
-  ) {
-    return this.purchaseService.updateCartItem(req.user.sub, itemId, body.quantity);
-  }
-
-  @Delete('cart/:itemId')
-  async removeFromCart(@Request() req, @Param('itemId') itemId: string) {
-    return this.purchaseService.removeFromCart(req.user.sub, itemId);
-  }
-
   @Post('checkout')
   async checkout(@Request() req) {
     return this.purchaseService.checkout(req.user.sub);

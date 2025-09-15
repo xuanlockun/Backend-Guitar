@@ -15,20 +15,20 @@ import { CartsService } from './carts.service';
 @Controller('carts')
 export class CartsController {
       constructor(private readonly cartService: CartsService) {}
-      @Get('cart')
+      @Get()
       async getCart(@Request() req) {
         return this.cartService.getOrCreateCart(req.user.sub);
       }
     
-      @Post('cart/add')
-      async addToCart(
-        @Request() req,
-        @Body() body: { productId: string; quantity: number },
-      ) {
-        return this.cartService.addToCart(req.user.sub, body.productId, body.quantity);
-      }
+      // @Post('cart/add')
+      // async addToCart(
+      //   @Request() req,
+      //   @Body() body: { productId: string; quantity: number },
+      // ) {
+      //   return this.cartService.addToCart(req.user.sub, body.productId, body.quantity);
+      // }
     
-      @Put('cart/:itemId')
+      @Put(':itemId')
       async updateCartItem(
         @Request() req,
         @Param('itemId') itemId: string,
@@ -37,7 +37,7 @@ export class CartsController {
         return this.cartService.updateCartItem(req.user.sub, itemId, body.quantity);
       }
     
-      @Delete('cart/:itemId')
+      @Delete(':itemId')
       async removeFromCart(@Request() req, @Param('itemId') itemId: string) {
         return this.cartService.removeFromCart(req.user.sub, itemId);
       }
