@@ -1,15 +1,7 @@
-import {
-  Body,
-  Controller,
-  Get,
-  HttpCode,
-  HttpStatus,
-  Post,
-  Request,
-  UseGuards
-} from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Post, Request, UseGuards, Res } from '@nestjs/common';
 import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
+import type { Response } from 'express';
 
 export class SignInDto {
   username: string;
@@ -24,14 +16,14 @@ export class RegisterDto {
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) { }
 
   @HttpCode(HttpStatus.OK)
   @Post('login')
-  signIn(@Body() signInDto: SignInDto) {
-    return this.authService.signIn(signInDto.username, signInDto.password);
+  signIn(@Body() signInDto: SignInDto, @Res({ passthrough: true }) res: Response) {
+    return this.authService.signIn(signInDto.username, signInDto.password, res);
   }
-
+  
   @HttpCode(HttpStatus.CREATED)
   @Post('register')
   register(@Body() registerDto: RegisterDto) {
