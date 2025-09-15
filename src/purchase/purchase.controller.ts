@@ -22,8 +22,8 @@ export class PurchaseController {
     return this.purchaseService.checkout(req.user.sub);
   }
 
-  @Get('orders')
-  async getUserOrders(@Request() req) {
-    return this.purchaseService.getUserOrders(req.user.sub);
-  }
+  // @Get('orders')
+  // async getUserOrders(@Request() req) {
+  //   return this.purchaseService.getUserOrders(req.user.sub);
+  // }
 }
