@@ -18,7 +18,7 @@ export class AuthService {
     const isValid = await this.usersService.validatePassword(password, user.password);
     if (!isValid) throw new UnauthorizedException('Invalid credentials');
 
-    const payload = { sub: user.id, username: user.username };
+    const payload = { sub: user.userId, username: user.username };
     const token = await this.jwtService.signAsync(payload);
 
     res.cookie('access-token', token, {
@@ -28,7 +28,7 @@ export class AuthService {
       sameSite: 'lax',
     });
 
-    return { message: 'Login successful', user: { id: user.id, username: user.username } };
+    return { message: 'Login successful', user: { id: user.userId, username: user.username } };
   }
 
 
