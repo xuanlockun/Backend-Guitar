@@ -16,7 +16,12 @@ export class ProductsService {
   ) { }
 
   async findAll(): Promise<Product[]> {
-    return this.productRepository.find();
+    // return this.productRepository.find();
+    const products = await this.productRepository.find();
+    return products.map(p => ({
+      ...p,
+      price: Number(p.price), // convert string to number
+    }));
   }
 
   async findOne(id: string): Promise<Product> {

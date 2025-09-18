@@ -28,7 +28,7 @@ export class AuthService {
       sameSite: 'lax',
     });
 
-    return { message: 'Login successful', user: { id: user.userId, username: user.username } };
+    return { message: 'Login successful', user: { id: user.userId, role: user.role, username: user.username } };
   }
 
 

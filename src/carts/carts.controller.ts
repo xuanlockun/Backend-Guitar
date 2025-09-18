@@ -28,7 +28,7 @@ export class CartsController {
   // ) {
   //   return this.cartService.addToCart(req.user.sub, body.productId, body.quantity);
   // }
-  
+
   @UseGuards(AuthGuard)
   @Put(':itemId')
   async updateCartItem(

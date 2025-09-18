@@ -1,11 +1,14 @@
 import { Injectable, ConflictException } from '@nestjs/common';
 import { UsersRepository } from './users.repository';
 import * as bcrypt from 'bcrypt';
+import { User } from './user.entity';
 
 @Injectable()
 export class UsersService {
   constructor(private readonly usersRepository: UsersRepository) {}
-
+  async findAll(): Promise<User[]> {
+    return this.usersRepository.find();
+  }
   async findOne(username: string): Promise<any> {
     const user = await this.usersRepository.findByUsername(username);
     if (!user) return undefined;
@@ -14,7 +17,8 @@ export class UsersService {
       userId: user.id,
       username: user.username,
       password: user.password,
-      email: user.email
+      email: user.email,
+      role: user.role,
     };
   }
 
