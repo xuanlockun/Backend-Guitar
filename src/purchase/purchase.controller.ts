@@ -20,7 +20,7 @@ export class PurchaseController {
   @Post('checkout')
   async checkout(@Request() req) {
     return this.purchaseService.checkout(req.user.sub);
-  }
+  } 
 
   // @Get('orders')
   // async getUserOrders(@Request() req) {

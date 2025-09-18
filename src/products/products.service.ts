@@ -13,7 +13,7 @@ export class ProductsService {
   constructor(
     @InjectRepository(Product)
     private readonly productRepository: Repository<Product>,
-  ) {}
+  ) { }
 
   async findAll(): Promise<Product[]> {
     return this.productRepository.find();
@@ -62,4 +62,18 @@ export class ProductsService {
       throw new NotFoundException(`Product with ID "${id}" not found`);
     }
   }
+  async updateProductImage(productId: string, filename: string) {
+    const product = await this.productRepository.findOne({
+      where: { id: productId },
+    });
+    if (!product) {
+      throw new NotFoundException('Product not found');
+    }
+
+    product.images = [...(product.images || []), `/uploads/products/${filename}`];
+
+    return this.productRepository.save(product);
+  }
+
+
 }
