@@ -37,6 +37,7 @@ export class CartsService {
         return cart;
     }
 
+
     async addToCart(userId: string, productId: string, quantity: number): Promise<Cart> {
         const cart = await this.getOrCreateCart(userId);
         const product = await this.productRepository.findOne({ where: { id: productId } });

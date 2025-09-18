@@ -20,6 +20,8 @@ export class AddressController {
     @Get()
     async getMyAddress(@Request() req) {
         const userid = req.user.sub;
+        console.log('UserId:', userid);
+
         return this.addressService.getUserAddresses(userid);
     }
 
