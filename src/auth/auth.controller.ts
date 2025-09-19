@@ -9,6 +9,7 @@ import { UserRole } from 'src/users/user.entity';
 
 export class SignInDto {
   username: string;
+  email: string;
   password: string;
 }
 
@@ -29,7 +30,7 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @Post('login')
   signIn(@Body() signInDto: SignInDto, @Res({ passthrough: true }) res: Response) {
-    return this.authService.signIn(signInDto.username, signInDto.password, res);
+    return this.authService.signIn(signInDto.username,signInDto.email, signInDto.password, res);
   }
 
   @HttpCode(HttpStatus.CREATED)
@@ -43,7 +44,7 @@ export class AuthController {
   }
 
   @UseGuards(AuthGuard)
-  @Get('profile')
+  @Get('me')
   getProfile(@Request() req) {
     return req.user;
   }

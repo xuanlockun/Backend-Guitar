@@ -5,14 +5,14 @@ import { User } from './user.entity';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly usersRepository: UsersRepository) {}
+  constructor(private readonly usersRepository: UsersRepository) { }
   async findAll(): Promise<User[]> {
     return this.usersRepository.find();
   }
   async findOne(username: string): Promise<any> {
     const user = await this.usersRepository.findByUsername(username);
     if (!user) return undefined;
-    
+
     return {
       userId: user.id,
       username: user.username,
@@ -20,6 +20,19 @@ export class UsersService {
       email: user.email,
       role: user.role,
     };
+  }
+  async findByUsername(username: string): Promise<any> {
+    const user = await this.usersRepository.findByUsername(username);
+    return user
+      ? { userId: user.id, username: user.username, password: user.password, email: user.email, role: user.role }
+      : undefined;
+  }
+
+  async findByEmail(email: string): Promise<any> {
+    const user = await this.usersRepository.findByEmail(email);
+    return user
+      ? { userId: user.id, username: user.username, password: user.password, email: user.email, role: user.role }
+      : undefined;
   }
 
   async createUser(username: string, password: string, email?: string): Promise<any> {

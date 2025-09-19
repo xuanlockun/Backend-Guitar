@@ -11,8 +11,10 @@ export class AuthService {
     private jwtService: JwtService
   ) { }
 
-  async signIn(username: string, password: string, res: Response) {
-    const user = await this.usersService.findOne(username);
+  async signIn(username: string,email: string, password: string, res: Response) {
+    const user = await this.usersService.findByEmail(email) 
+            ?? await this.usersService.findByUsername(username);
+
     if (!user) throw new UnauthorizedException('Invalid credentials');
 
     const isValid = await this.usersService.validatePassword(password, user.password);
