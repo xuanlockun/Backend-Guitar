@@ -11,7 +11,7 @@ async function bootstrap() {
   app.getHttpAdapter().getInstance().disable('etag');
   app.use(cookieParser());
   app.enableCors({
-    origin: 'http://localhost:5173',
+    origin: true,
     credentials: true,
   });
   app.useStaticAssets(join(__dirname, '..', 'uploads'), {
